@@ -1,0 +1,12 @@
+body {
+    background-color: #E3E9ED;
+}
+
+#input {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 14px;
+}
+
+.card .list-group {
+    text-align: justify;
+}

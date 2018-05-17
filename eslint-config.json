@@ -1,0 +1,41 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "script",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "Promise": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "semi": "error",
+        "no-eval": "error",
+        "max-len": ["error", 100],
+        "no-implicit-globals": "error",
+        "curly": "error",
+        "no-console": "warn",
+        "eqeqeq": ["warn", "smart"],
+        "require-jsdoc": ["warn", {
+            "require": {
+                "FunctionDeclaration": true,
+                "MethodDefinition": false,
+                "ClassDeclaration": false,
+                "ArrowFunctionExpression": false,
+                "FunctionExpression": false
+            }
+        }],
+        "no-trailing-spaces": "warn",
+        "no-var": "error",
+        "no-magic-numbers": ["warn", {
+            "ignore": [0, 1],
+            "enforceConst": true
+        }],
+        "strict": ["error", "global"]
+    }
+}
