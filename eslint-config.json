@@ -36,6 +36,12 @@
             "ignore": [0, 1],
             "enforceConst": true
         }],
-        "strict": ["error", "global"]
+        "strict": ["error", "global"],
+        "operator-linebreak": ["error", "after"],
+        "dot-location": ["error", "property"],
+        "no-empty-function": "error",
+        "no-implied-eval": "error",
+        "array-bracket-spacing": ["error", "never"],
+        "camelcase": "error"
     }
 }
