@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 header("Content-type:application/json");
+include("config.php");
 
 function die_and_error($message) {
   header("HTTP/2 400 Bad Request");
@@ -24,7 +25,12 @@ $tmp_file_handle = fopen($temp_file, "w");
 fwrite($tmp_file_handle, $code);
 fclose($tmp_file_handle);
 
-$eslint_cmd = dirname(__FILE__) . "/node_modules/.bin/eslint --no-eslintrc --config ./eslint-config.json --format json";
+$currentdir = dirname(__FILE__);
+$node = "";
+if ($node_location != "") {
+    $node = $currentdir . $node_location;
+}
+$eslint_cmd = "{$node} {$currentdir}/node_modules/.bin/eslint --no-eslintrc --config {$currentdir}/eslint-config.json --format json";
 $cmd = "{$eslint_cmd} {$temp_file}";
 $output = shell_exec($cmd);
 
