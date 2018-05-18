@@ -7,15 +7,23 @@
     the success card is displayed to the user.
 */
 
-/* global fetch */
+/* global ESLINT_OPTIONS */
 
 "use strict";
 (function () {
+    let linter = null; // ESLint linter object
+    
     /**
      * Setup the click handler to run js linting process. Automatically runs
-     * on page load if there are data in the box from referer.
+     * on page load if there are data in the box from referer. Initialize the global
+     * linter object.
      */
     window.onload = function () {
+        disableRunBtn(true, "Loading...");
+        require(["eslint"], function(Linter) {
+            disableRunBtn(false);
+            linter = new Linter();
+        });
         document.getElementById("run").onclick = run;
         if (!inputEmpty()) {
             run();
@@ -38,24 +46,20 @@
             return;
         }
         let input = document.getElementById("input").value;
-        let postParams = new FormData();
-        postParams.append("code", input);
         disableRunBtn(true);
         displayValidationCards("all", false);
-        fetch("eslint.php", {method: "POST", body: postParams})
-            .then(checkStatus)
-            .then(JSON.parse)
-            .then(populatePage)
-            .catch(fetchError);
+        let linted = linter.verifyAndFix(input, ESLINT_OPTIONS);
+        populatePage(linted);
     }
-
+    
     /**
-     * Enables the run button and set the button text to an error message.
+     * Given the line, it returns the string of the given code from the line number.
+     * @param line {Number} The line number it should return
+     * @return {String} The text from the line number
      */
-    function fetchError() {
-        disableRunBtn(false);
-        let run = document.getElementById("run");
-        run.innerText = "Error parsing the JavaScript source. Too large?";
+    function getCodeFromLine(line) {
+        let input = document.getElementById("input").value.split("\n");
+        return input[line - 1];
     }
 
     /**
@@ -64,8 +68,7 @@
      * @param response {JSON} the api response
      */
     function populatePage(response) {
-        response = response[0];
-        if (response.warningCount === 0 && response.errorCount === 0) {
+        if (response.messages.length === 0) {
             displayValidationCards("success", true);
         } else {
             const SEVERITY_ERROR = 2;
@@ -117,8 +120,9 @@
 
             let reason = document.createTextNode(": " + message.message);
             li.appendChild(reason);
-
-            if (message.source.trim().length > 0) {
+            
+            let source = getCodeFromLine(message.line);
+            if (source.trim().length > 0) {
                 let br = document.createElement("br");
                 li.appendChild(br);
 
@@ -126,7 +130,7 @@
                 let code = document.createElement("code");
                 pre.appendChild(code);
                 li.appendChild(pre);
-                code.innerText = message.source + "\n";
+                code.innerText = source + "\n";
                 for (let j = 1; j < message.column; j++) {
                     code.innerText += " ";
                 }
@@ -145,13 +149,13 @@
      * Disables/enables the jslint run button.
      * @param disabled {Boolean} true to disable, else false
      */
-    function disableRunBtn(disabled) {
+    function disableRunBtn(disabled, text) {
         let run = document.getElementById("run");
         run.disabled = disabled;
         if (disabled) {
-            run.innerText = "Linting...";
+            run.innerText = text || "Linting...";
         } else {
-            run.innerText = "Run JSLint";
+            run.innerText = text || "Run JSLint";
         }
     }
 
@@ -174,24 +178,6 @@
             } else {
                 thisCard.style.display = "none";
             }
-        }
-    }
-
-    /**
-     * Function to check the status of an Ajax call, boiler plate code to include,
-     * based on: https://developers.google.com/web/updates/2015/03/introduction-to-fetch
-     * @param the response text from the url call
-     * @return did we succeed or not, so we know whether or not to continue with the handling of
-     * this promise
-     */
-    function checkStatus(response) {
-        const LOWER_OK_STATUS = 200;
-        const HIGHER_OK_STATUS = 300;
-        if (response.status >= LOWER_OK_STATUS && response.status < HIGHER_OK_STATUS) {
-            return response.text();
-        } else {
-            return Promise.reject(new Error(response.status +
-                                        ": " + response.statusText));
         }
     }
 })();
