@@ -7,11 +7,12 @@
     the success card is displayed to the user.
 */
 
-/* global ESLINT_OPTIONS */
+/* global ESLINT_OPTIONS, ace, require */
 
 "use strict";
 (function () {
     let linter = null; // ESLint linter object
+    let aceEditor = null; // C9 ACE Editor object
     
     /**
      * Setup the click handler to run js linting process. Automatically runs
@@ -24,6 +25,10 @@
             disableRunBtn(false);
             linter = new Linter();
         });
+        aceEditor = ace.edit("input");
+        aceEditor.session.setMode("ace/mode/javascript");
+        aceEditor.setPrintMarginColumn(100);
+        aceEditor.getSession().setUseWorker(false);
         document.getElementById("run").onclick = run;
         if (!inputEmpty()) {
             run();
@@ -35,7 +40,7 @@
      * @return {Boolean} true if empty, else false
      */
     function inputEmpty() {
-        return document.getElementById("input").value.trim() === "";
+        return aceEditor.getValue() === "";
     }
 
     /**
@@ -45,21 +50,11 @@
         if (inputEmpty()) {
             return;
         }
-        let input = document.getElementById("input").value;
+        let input = aceEditor.getValue();
         disableRunBtn(true);
         displayValidationCards("all", false);
         let linted = linter.verifyAndFix(input, ESLINT_OPTIONS);
         populatePage(linted);
-    }
-    
-    /**
-     * Given the line, it returns the string of the given code from the line number.
-     * @param line {Number} The line number it should return
-     * @return {String} The text from the line number
-     */
-    function getCodeFromLine(line) {
-        let input = document.getElementById("input").value.split("\n");
-        return input[line - 1];
     }
 
     /**
@@ -121,7 +116,7 @@
             let reason = document.createTextNode(": " + message.message);
             li.appendChild(reason);
             
-            let source = getCodeFromLine(message.line);
+            let source = aceEditor.session.getLine(message.line - 1);
             if (source.trim().length > 0) {
                 let br = document.createElement("br");
                 li.appendChild(br);

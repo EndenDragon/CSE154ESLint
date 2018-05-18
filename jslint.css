@@ -2,9 +2,9 @@ body {
     background-color: #E3E9ED;
 }
 
-#input {
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 14px;
+#input { 
+    height: 400px;
+    margin-bottom: 10px;
 }
 
 .card .list-group {

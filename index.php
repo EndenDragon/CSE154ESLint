@@ -23,10 +23,8 @@
 		</div>
 		<?php endif; ?>
 
-		<div class="form-group">
-			<textarea class="form-control" id="input" rows="15" spellcheck="false" placeholder="Paste your JavaScript code here."><?php include("referer.php"); ?></textarea>
-		</div>
-		
+		<div id="input"><?php include("referer.php"); ?></div>
+
 		<div>
 			<button type="button" class="btn btn-primary btn-lg" id="run">Run JSLint</button>
 		</div>
@@ -105,7 +103,8 @@ function addOne(i) {
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js" data-main="requireConfig" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js" data-main="requireConfig"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" integrity="sha256-NLPE2EQpOtxTAUB/jxjM97jsGmVQopiX8ceHySHhXs8=" crossorigin="anonymous"></script>
 		<script>
 			const ESLINT_OPTIONS = <?php echo file_get_contents("eslint-config.json"); ?>;
 		</script>
