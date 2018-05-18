@@ -11,6 +11,8 @@
 
 "use strict";
 (function () {
+    const ACE_PRINT_MARGIN = 100; // 100 lines of code line
+    
     let linter = null; // ESLint linter object
     let aceEditor = null; // C9 ACE Editor object
     
@@ -27,7 +29,7 @@
         });
         aceEditor = ace.edit("input");
         aceEditor.session.setMode("ace/mode/javascript");
-        aceEditor.setPrintMarginColumn(100);
+        aceEditor.setPrintMarginColumn(ACE_PRINT_MARGIN);
         aceEditor.getSession().setUseWorker(false);
         document.getElementById("run").onclick = run;
         if (!inputEmpty()) {
