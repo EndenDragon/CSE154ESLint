@@ -55,7 +55,7 @@
         let input = aceEditor.getValue();
         disableRunBtn(true);
         displayValidationCards("all", false);
-        let linted = linter.verifyAndFix(input, ESLINT_OPTIONS);
+        let linted = linter.verify(input, ESLINT_OPTIONS);
         populatePage(linted);
     }
 
@@ -65,14 +65,14 @@
      * @param response {JSON} the api response
      */
     function populatePage(response) {
-        if (response.messages.length === 0) {
+        if (response.length === 0) {
             displayValidationCards("success", true);
         } else {
             const SEVERITY_ERROR = 2;
             const SEVERITY_WARN = 1;
             let messages = {error: [], warn: []};
-            for (let i = 0; i < response.messages.length; i++) {
-                let message = response.messages[i];
+            for (let i = 0; i < response.length; i++) {
+                let message = response[i];
                 if (message.severity === SEVERITY_ERROR) {
                     messages.error.push(message);
                 } else if (message.severity === SEVERITY_WARN) {
