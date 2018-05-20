@@ -25,6 +25,26 @@
 
 		<div id="input"><?php include("referer.php"); ?></div>
 
+		<div class="card border-dark mb-3">
+			<div class="card-header">Options</div>
+			<div class="card-body text-primary">
+				<form>
+					<div class="form-group row">
+						<label for="option-tab-size-select" class="col-sm-2 col-form-label">Tab Size Setting</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="option-tab-size-select">
+								<option value="2">2</option>
+								<option value="3" selected="selected">3</option>
+								<option value="4">4</option>
+								<option value="6">6</option>
+								<option value="8">8</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<div>
 			<button type="button" class="btn btn-primary btn-lg" id="run">Run JSLint</button>
 		</div>

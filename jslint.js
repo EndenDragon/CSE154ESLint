@@ -53,6 +53,8 @@
             return;
         }
         let input = aceEditor.getValue();
+        let tabSize = document.getElementById("option-tab-size-select").value;
+        input = untabify(input, parseInt(tabSize, 10));
         disableRunBtn(true);
         displayValidationCards("all", false);
         let linted = linter.verify(input, ESLINT_OPTIONS);
@@ -176,5 +178,35 @@
                 thisCard.style.display = "none";
             }
         }
+    }
+
+    /**
+     * Converts tabs to spaces. Totally not stolen from GradeIt's PHP source and
+     * converted line by line to JavaScript alternative.
+     * @param text {String} The text to convert tab to space
+     * @param tabWidth {Number} The width of a tab
+     * @return {String} The text with tabs converted to spaces
+     */
+    function untabify(text, tabWidth = 3) {
+        let lines = text.split(/\r?\n/);
+        let newLines = [];
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            let newLine = "";
+            for (let j = 0; j < line.length; j++) {
+                let ch = line[j];
+                if (ch === "\t") {
+                    // replace tab with spaces
+                    newLine += " ";
+                    while (newLine.length % tabWidth !== 0) {
+                        newLine += " ";
+                    }
+                } else {
+                    newLine += ch;
+                }
+            }
+            newLines.push(newLine);
+        }
+        return newLines.join("\n");
     }
 })();
