@@ -215,6 +215,11 @@
         return newLines.join("\n");
     }
 
+    /**
+     * Called with a javascript event handler on the element
+     * that has a dataset of row and column. It focuses the ace
+     * editor and jumps the cursor to the specific row and col.
+     */
     function jumpToLine() {
         let row = this.dataset.row;
         let col = this.dataset.col;
