@@ -23,7 +23,11 @@
 		</div>
 		<?php endif; ?>
 
-		<div id="input"><?php include("referer.php"); ?></div>
+		<div class="card border-primary mb-3">
+			<div class="card-body text-primary">
+				<div id="input"><?php include("referer.php"); ?></div>
+			</div>
+		</div>
 
 		<div class="card border-dark mb-3">
 			<div class="card-header">Options</div>
