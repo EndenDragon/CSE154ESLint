@@ -56,6 +56,7 @@
         let input = aceEditor.getValue();
         let tabSize = document.getElementById("option-tab-size-select").value;
         input = untabify(input, parseInt(tabSize, 10));
+        aceEditor.setValue(input);
         disableRunBtn(true);
         displayValidationCards("all", false);
         let linted = linter.verify(input, ESLINT_OPTIONS);
@@ -117,6 +118,9 @@
             let rowCol = document.createElement("strong");
             rowCol.innerText = "line " + message.line + ", column " + message.column;
             li.appendChild(rowCol);
+            rowCol.dataset.row = message.line;
+            rowCol.dataset.col = message.column;
+            rowCol.onclick = jumpToLine;
 
             let reason = document.createTextNode(": " + message.message);
             li.appendChild(reason);
@@ -209,5 +213,13 @@
             newLines.push(newLine);
         }
         return newLines.join("\n");
+    }
+
+    function jumpToLine() {
+        let row = this.dataset.row;
+        let col = this.dataset.col;
+        window.scrollTo(0, 0);
+        aceEditor.focus();
+        aceEditor.gotoLine(row, col);
     }
 })();

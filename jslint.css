@@ -11,3 +11,7 @@ body {
 .card .list-group {
     text-align: justify;
 }
+
+#warn-card .list-group-item strong, #error-card .list-group-item strong {
+    cursor: pointer;
+}
