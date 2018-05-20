@@ -12,10 +12,11 @@
 "use strict";
 (function () {
     const ACE_PRINT_MARGIN = 100; // 100 lines of code line
-    
+    const DEFAULT_TAB_SIZE = 3; // Default selected tab size setting
+
     let linter = null; // ESLint linter object
     let aceEditor = null; // C9 ACE Editor object
-    
+
     /**
      * Setup the click handler to run js linting process. Automatically runs
      * on page load if there are data in the box from referer. Initialize the global
@@ -119,7 +120,7 @@
 
             let reason = document.createTextNode(": " + message.message);
             li.appendChild(reason);
-            
+
             let source = aceEditor.session.getLine(message.line - 1);
             if (source.trim().length > 0) {
                 let br = document.createElement("br");
@@ -187,7 +188,7 @@
      * @param tabWidth {Number} The width of a tab
      * @return {String} The text with tabs converted to spaces
      */
-    function untabify(text, tabWidth = 3) {
+    function untabify(text, tabWidth = DEFAULT_TAB_SIZE) {
         let lines = text.split(/\r?\n/);
         let newLines = [];
         for (let i = 0; i < lines.length; i++) {
