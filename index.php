@@ -120,7 +120,7 @@ function addOne(i) {
 		</div>
 
 		<p>
-			<a href="https://eslint.org/">Original version of ESLint</a> by the JS Foundation. Download our <a href="./eslint-config.json">ESLint configuration</a>
+			<a href="https://eslint.org/">Original version of ESLint</a> by Nicholas C. Zakas. Now maintained by the JS Foundation. Download our <a href="./eslint-config.json">ESLint configuration</a>
 			and run ESLint on your own <a href="https://eslint.org/docs/user-guide/integrations">integrations</a>!
 		</p>
 		
